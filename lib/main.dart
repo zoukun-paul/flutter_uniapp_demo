@@ -5,6 +5,11 @@ void main() {
   runApp(const MyApp());
 }
 
+const MethodChannel nativeChannelTx = MethodChannel('native_msg');
+const MethodChannel uniAppChannelTx = MethodChannel('uniapp_msg');
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -43,13 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
               TextButton(onPressed: () async {
-                const channel = MethodChannel('UniMP_mini_apps');
-                channel.invokeMethod("open",{'AppID': "__UNI__3BC70CE"});
-              }, child: Text("local-uniAPP-1")),
+                nativeChannelTx.invokeMethod("open",{'AppID': "__UNI__3BC70CE"});
+              }, child: const Text("local-uniAPP-1")),
             TextButton(onPressed: () async {
-              const channel = MethodChannel('UniMP_mini_apps');
-              channel.invokeMethod("open",{'AppID': "__UNI__7AEA00D", "remote":true});
-            }, child: Text("remote-uniAPP-1"))
+              nativeChannelTx.invokeMethod("open",{'AppID': "__UNI__7AEA00D", "remote":true});
+            }, child: const Text("remote-uniAPP-1"))
 
           ],
         ),
