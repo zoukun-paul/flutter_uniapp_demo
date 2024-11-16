@@ -1,0 +1,39 @@
+PODS:
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - SDWebImage (5.19.2):
+    - SDWebImage/Core (= 5.19.2)
+  - SDWebImage/Core (5.19.2)
+  - Toast (4.1.1)
+  - unimp/Core (4.29):
+    - SDWebImage (= 5.19.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - unimp/Core
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+    - Toast
+    - unimp
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
+  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
+  Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
+  unimp: 3387dda97f23a6210f8e1b9aad2725d45fc6a763
+
+PODFILE CHECKSUM: 0c8257df4b58a96c2cd137015d5db36ce1a81afb
+
+COCOAPODS: 1.16.1

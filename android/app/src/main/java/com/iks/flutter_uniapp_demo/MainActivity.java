@@ -97,15 +97,41 @@ public class MainActivity extends FlutterActivity {
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
         BinaryMessenger messenger = flutterEngine.getDartExecutor().getBinaryMessenger();
-        MethodChannel uniMPMiniApps = new MethodChannel(messenger, "UniMP_mini_apps");
-        uniMPMiniApps.setMethodCallHandler((call, res) -> {
+
+        MethodChannel nativeRecvMsg = new MethodChannel(messenger, "native_msg");
+        nativeRecvMsg.setMethodCallHandler((call, res) -> {
             String method = call.method;
             System.out.println("---->" + method);
             if (Objects.equals(method, "open")) {
                 openUniApp(call, res);
-            } else {
-                res.error("error_code", "error_message", null);
+                    break;
+                case "close":
+                    String appId = call.argument("AppID");
+                    IUniMP iUniMP = mUniMPCaches.get(appId);
+                    if (iUniMP != null && iUniMP.isRuning()) {
+                        iUniMP.closeUniMP();
+                        mUniMPCaches.remove(appId);
+                    }
+                    break;
+                case "send_to_uniapp":
+
+
             }
+        });
+        
+
+        MethodChannel uniAppRecvMsg = new MethodChannel(messenger, "uniapp_msg");
+        uniAppRecvMsg.setMethodCallHandler((call, res) -> {
+            String method = call.method;
+            String appId = call.argument("AppID");
+            IUniMP iUniMP = mUniMPCaches.get(appId);
+            if (iUniMP == null) {
+                System.out.println("----> iUniMP is null, Appid: " + appId);
+                return;
+            }
+            String event = call.argument("event");
+            System.out.println("---->" + method + "Appid: " + appId + "event: " + event);
+            iUniMP.sendUniMPEvent(event, call.arguments);
         });
     }
 
