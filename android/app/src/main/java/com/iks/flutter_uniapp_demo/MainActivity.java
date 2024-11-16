@@ -97,41 +97,15 @@ public class MainActivity extends FlutterActivity {
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
         BinaryMessenger messenger = flutterEngine.getDartExecutor().getBinaryMessenger();
-
-        MethodChannel nativeRecvMsg = new MethodChannel(messenger, "native_msg");
-        nativeRecvMsg.setMethodCallHandler((call, res) -> {
+        MethodChannel uniMPMiniApps = new MethodChannel(messenger, "UniMP_mini_apps");
+        uniMPMiniApps.setMethodCallHandler((call, res) -> {
             String method = call.method;
             System.out.println("---->" + method);
             if (Objects.equals(method, "open")) {
                 openUniApp(call, res);
-                    break;
-                case "close":
-                    String appId = call.argument("AppID");
-                    IUniMP iUniMP = mUniMPCaches.get(appId);
-                    if (iUniMP != null && iUniMP.isRuning()) {
-                        iUniMP.closeUniMP();
-                        mUniMPCaches.remove(appId);
-                    }
-                    break;
-                case "send_to_uniapp":
-
-
+            } else {
+                res.error("error_code", "error_message", null);
             }
-        });
-        
-
-        MethodChannel uniAppRecvMsg = new MethodChannel(messenger, "uniapp_msg");
-        uniAppRecvMsg.setMethodCallHandler((call, res) -> {
-            String method = call.method;
-            String appId = call.argument("AppID");
-            IUniMP iUniMP = mUniMPCaches.get(appId);
-            if (iUniMP == null) {
-                System.out.println("----> iUniMP is null, Appid: " + appId);
-                return;
-            }
-            String event = call.argument("event");
-            System.out.println("---->" + method + "Appid: " + appId + "event: " + event);
-            iUniMP.sendUniMPEvent(event, call.arguments);
         });
     }
 
@@ -146,7 +120,7 @@ public class MainActivity extends FlutterActivity {
         try {
             // 启动内置的 uniAPP
 
-            IUniMP iUniMP = DCUniMPSDK.getInstance().openUniMP(MainActivity.this, appId);
+            IUniMP iUniMP = DCUniMPSDK.getInstance().openUniMP(this, appId);
             mUniMPCaches.put(appId, iUniMP);
         } catch (Exception e) {
             // TODO ERROR Handle

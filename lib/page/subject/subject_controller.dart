@@ -1,35 +1,39 @@
 
+import 'package:flutter_uniapp_demo/common/extension/DateTime.dart';
 import 'package:get/get.dart';
+
+import 'common.dart';
 
 class SubjectController extends GetxController {
 
-  final _currWeek = "第八周".obs;
-  String get currWeek => _currWeek.value;
-  set currWeek(week) => _currWeek.value=week;
+  final Rx<int> _currWeek = (DateTime.now().weekday).obs;
+  int get currWeek => _currWeek.value;
+  set currWeek(int week) => _currWeek.value=week;
 
   final _semester = "2024-2025 第一学期".obs;
   String get semester => _semester.value;
   set semester(semester) => _semester.value=semester;
 
+  /// 当前周
+  final _weekDays = ( DateTime.now().currWeekDays()).obs;
+  List<DateTime> get weekDays =>  _weekDays;
 
-  queryCourse(int currWeek){
-    return [];
-  }
+
+  /// 时间表
+  List<CourseSchedule> subScheduleTimes = standardCourseSchedule;
 
 }
 
 class CourseSchedule {
 
-  /// 课程表
-  List<Course> course = [];
-
-  /// 课程开始时间
   final DateTime startTime;
 
   final DateTime endDateTime;
 
-  CourseSchedule(this.startTime, this.endDateTime);
+  // 0 表示课程时间
+  final int type;
 
+  CourseSchedule({required this.startTime, required this.endDateTime,this.type=0});
 }
 
 class Course {

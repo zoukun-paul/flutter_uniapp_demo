@@ -39,5 +39,11 @@ extension ListExtend on List<Widget> {
       children: this,
     );
   }
+}
 
+extension ListGenExtend<T> on List<T> {
+    List<T> ins(int index, T t){
+      insert(index, t);
+      return this;
+    }
 }
