@@ -146,7 +146,7 @@ public class MainActivity extends FlutterActivity {
         try {
             // 启动内置的 uniAPP
 
-            IUniMP iUniMP = DCUniMPSDK.getInstance().openUniMP(this, appId);
+            IUniMP iUniMP = DCUniMPSDK.getInstance().openUniMP(MainActivity.this, appId);
             mUniMPCaches.put(appId, iUniMP);
         } catch (Exception e) {
             // TODO ERROR Handle
