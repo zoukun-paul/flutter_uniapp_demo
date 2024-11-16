@@ -11,6 +11,11 @@ void main() {
   runApp(const MyApp());
 }
 
+const MethodChannel nativeChannelTx = MethodChannel('native_msg');
+const MethodChannel uniAppChannelTx = MethodChannel('uniapp_msg');
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -26,5 +31,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
