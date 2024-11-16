@@ -87,7 +87,7 @@ Widget textField({bool obscureText=false,required String labelText, double label
 }
 
 
-Widget actionBtn({bool active=true, void Function()? onTap}){
+Widget actionBtn({String text="登录",bool active=true, void Function()? onTap}){
   return GestureDetector(
     onTap: ()=>onTap?.call(),
     child: Container(
@@ -97,8 +97,8 @@ Widget actionBtn({bool active=true, void Function()? onTap}){
           color: active?const Color(0xff58c6c6):const Color(0xffdddddd),
           borderRadius: const BorderRadius.all(Radius.circular(40))
       ),
-      child: const Text("登录",
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20, color: Color(0xffffffff)),
+      child: Text(text,
+        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 20, color: Color(0xffffffff)),
       ),
     ),
   );
@@ -217,3 +217,6 @@ Widget optionAction(){
     ],
   );
 }
+
+
+bool validPhone(String? phoneNumber)=>RegExp(r'^1[3-9]\d{9}$').hasMatch(phoneNumber??'');

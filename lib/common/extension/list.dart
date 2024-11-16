@@ -33,14 +33,11 @@ extension ListExtend on List<Widget> {
     return result;
   }
 
-  // Iterable<Widget> divide({ required Direction direction,BuildContext? context, Color? color, double size=0.8,double margin=2}){
-  //   List<Widget> tiles = this;
-  //   if (tiles.isEmpty || tiles.length == 1) {
-  //     return tiles;
-  //   }
-  //
-  //   return <Widget>[
-  //     ...tiles.spanWidget(child: divider(context: context,bgColor: color,size: size,margin: margin, direction: direction,))
-  //   ];
-  // }
+  Widget row({MainAxisAlignment mainAxisAlignment=MainAxisAlignment.start}){
+    return Row(
+      mainAxisAlignment: mainAxisAlignment,
+      children: this,
+    );
+  }
+
 }

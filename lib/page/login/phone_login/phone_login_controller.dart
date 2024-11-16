@@ -1,12 +1,11 @@
 import 'package:flutter_uniapp_demo/common/toast.dart';
+import 'package:flutter_uniapp_demo/page/login/common.dart';
 import 'package:get/get.dart';
 
 class PhoneLoginController extends GetxController {
 
-  final RegExp __phoneRegex = RegExp(r'^1[3-9]\d{9}$');
-
   /// 同意服务条约
-  final _agreeContract = true.obs;
+  final Rx<bool> _agreeContract = true.obs;
   bool get agreeContract => _agreeContract.value;
   set agreeContract(bool agreeContract)=>_agreeContract.value = agreeContract;
 
@@ -24,7 +23,7 @@ class PhoneLoginController extends GetxController {
 
   /// 表单校验
   bool formValid(){
-    if (!__phoneRegex.hasMatch(phoneNumber??'')) {
+    if (!validPhone(phoneNumber)) {
       toast("手机号非法");
       return false;
     }

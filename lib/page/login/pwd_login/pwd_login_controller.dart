@@ -1,5 +1,8 @@
 
 
+import 'package:flutter_uniapp_demo/common/toast.dart';
+import 'package:flutter_uniapp_demo/page/login/common.dart';
+import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:get/get.dart';
 
 class PwdLoginController extends GetxController {
@@ -29,7 +32,19 @@ class PwdLoginController extends GetxController {
 
   /// 登录（表单提交）
   void submit(){
-
+    if (!validPhone(phoneNumber)) {
+      toast("手机号非法");
+      return;
+    }
+    if (password=="5555") {
+      toast("密码不能为空");
+      return;
+    }
+    if(password=="123456" && phoneNumber=="18280894627"){
+        Routers.toHomePage();
+    }else{
+      toast("密码错误");
+    }
   }
 
 }
