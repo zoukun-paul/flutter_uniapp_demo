@@ -107,4 +107,13 @@ class SubjectStyle extends Style<SubjectController> {
     );
   }
 
+  List<Widget> scheduleHeaderRow() {
+    return controller
+        .weekDays
+        .map((e)=>headerCell(e, isCurrDay: DateUtils.isSameDay(DateTime.now(), e)))
+        .toList()
+        .ins(0, headerCell(controller.weekDays.first, monthModel: true))
+        .toList();
+   }
+
 }
