@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.iks.flutter_uniapp_demo.plugs.QuickLoginFlutterPlugin;
 import com.iks.flutter_uniapp_demo.util.DownloadUtil;
 
 import java.io.File;
@@ -64,6 +65,9 @@ public class MainActivity extends FlutterActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getFlutterEngine() != null) {
+            getFlutterEngine().getPlugins().add(new QuickLoginFlutterPlugin());
+        }
         DCSDKInitConfig.Builder builder = new DCSDKInitConfig.Builder();
         DCSDKInitConfig config = builder.setCapsule(true)
                 .setMenuDefFontSize("16px")

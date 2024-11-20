@@ -24,7 +24,8 @@ class Application extends StatelessWidget {
     }
     return GetMaterialApp(
       initialBinding: ScreenBinding(),
-      initialRoute: Routers.home,
+      // initialRoute: Routers.home,
+      initialRoute: Routers.loginByPhone,
       getPages: Routers.pages,
       builder: FToastBuilder(),
       title: 'Flutter UniAPP Demo',
