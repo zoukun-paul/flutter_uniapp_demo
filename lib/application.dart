@@ -28,7 +28,7 @@ class Application extends StatelessWidget {
       initialRoute: Routers.loginByPhone,
       getPages: Routers.pages,
       builder: FToastBuilder(),
-      title: 'Flutter UniAPP Demo',
+      title: '章鱼同学',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData(),
     );
