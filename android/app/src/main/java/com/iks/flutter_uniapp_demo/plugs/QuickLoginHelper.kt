@@ -54,7 +54,8 @@ class QuickLoginHelper : CoroutineScope by MainScope() {
         val uiConfig = call.argument<Map<String, Any>>("uiConfig")
         context?.let {
             if (uiConfig != null) {
-                quickLogin?.setUnifyUiConfig(UiConfigParser.getUiConfig(it, uiConfig, events))
+                val f = UiConfigParser.getUiConfig(it, uiConfig, events)
+                quickLogin?.setUnifyUiConfig(f)
             } else {
                 Logger.i("自定义授权页面ui没有设置")
             }

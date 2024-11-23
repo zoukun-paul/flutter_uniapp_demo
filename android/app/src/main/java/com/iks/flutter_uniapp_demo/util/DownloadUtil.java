@@ -18,11 +18,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class DownloadUtil {
-
     private static DownloadUtil downloadUtil;
     private final OkHttpClient okHttpClient;
-    private Context context;
-    private String TAG = "下载页面";
+    private final String TAG = "DownloadUtil";
 
     public static DownloadUtil get() {
         if (downloadUtil == null) {
@@ -41,13 +39,7 @@ public class DownloadUtil {
      * @param listener 下载监听
      */
     public void download(Context context, final String url, final String saveDir, final String fileName, final OnDownloadListener listener) {
-        this.context= context;
-        // 需要token的时候可以这样做
-        // SharedPreferences sp=MyApp.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
-        // Request request = new Request.Builder().header("token",sp.getString("token" , "")).url(url).build();
-
         Request request = new Request.Builder().url(url).build();
-
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -61,12 +53,11 @@ public class DownloadUtil {
                 int len = 0;
                 FileOutputStream fos = null;
                 // 储存下载文件的目录
-                String savePath = isExistDir(saveDir);
-                Log.w(TAG,"存储下载目录："+savePath);
+                Log.w(TAG,"存储下载目录："+saveDir);
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
-                    File file = new File(savePath, getNameFromUrl(fileName));
+                    File file = new File(saveDir, fileName);
                     Log.w(TAG,"最终路径："+file);
                     fos = new FileOutputStream(file);
                     long sum = 0;
@@ -79,19 +70,23 @@ public class DownloadUtil {
                     }
                     fos.flush();
                     // 下载完成
+                    Log.d(TAG, "下载完成");
                     listener.onDownloadSuccess(file);
                 } catch (Exception e) {
+                    Log.d(TAG, "download exception " + e.getMessage());
                     listener.onDownloadFailed();
                 } finally {
                     try {
                         if (is != null)
                             is.close();
                     } catch (IOException e) {
+                        Log.d(TAG, "onResponse: download load error, " + e.getMessage());
                     }
                     try {
                         if (fos != null)
                             fos.close();
                     } catch (IOException e) {
+                        Log.d(TAG, "onResponse: download load error, " + e.getMessage());
                     }
                 }
             }
@@ -106,23 +101,13 @@ public class DownloadUtil {
      */
     private String isExistDir(String saveDir) throws IOException {
         // 下载位置
-        File downloadFile = new File(Environment.getExternalStorageDirectory().getPath() + "/download/", saveDir);
+        File downloadFile = new File(Environment.getExternalStorageDirectory().getPath() + "/download/");
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }
         String savePath = downloadFile.getAbsolutePath();
         Log.w(TAG,"下载目录："+savePath);
         return savePath;
-    }
-
-    /**
-     * @param url
-     * @return
-     * 传入文件名
-     */
-    @NonNull
-    public String getNameFromUrl(String url) {
-        return url;
     }
 
     public interface OnDownloadListener {

@@ -4,6 +4,10 @@
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS" />
     <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:extractNativeLibs="true"
         android:label="flutter_uniapp_demo"
@@ -15,6 +19,7 @@
             android:launchMode="singleTop"
             android:taskAffinity="flutter."
             android:theme="@style/LaunchTheme"
+            android:requestLegacyExternalStorage="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
@@ -33,14 +38,12 @@
 
         </activity>
 
-       <activity android:name=".AndroidActivity"
-           android:exported="true"
-       />
+       <activity android:name=".AndroidActivity" android:exported="true" />
         <activity
             android:name="com.netease.nis.quicklogin.ui.CmccLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:taskAffinity="flutter."
-            android:theme="@style/Theme.ActivityDialogStyle" /> <!-- 移动登录页中转 -->
+            android:theme="@style/Theme.ActivityDialogStyle" />
         <activity-alias
             android:name="com.cmic.gen.sdk.view.GenLoginAuthActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -56,6 +59,39 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:taskAffinity="flutter."
             android:theme="@style/Theme.ActivityDialogStyle" />
+        <activity
+            android:name="io.dcloud.feature.sdk.multi.DCUniMPTopActivity0"
+            android:configChanges="orientation|keyboard|keyboardHidden|smallestScreenSize|screenLayout|screenSize|mcc|mnc|fontScale|navigation|uiMode"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:permission="com.miui.securitycenter.permission.AppPermissionsEditor"
+            android:process=":unimp0"
+            android:launchMode="singleTask"
+            android:taskAffinity="flutter.uni.app0"
+            android:theme="@style/DCloudTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="io.dcloud.feature.sdk.multi.DCUniMPTopActivity1"
+            android:configChanges="orientation|keyboard|keyboardHidden|smallestScreenSize|screenLayout|screenSize|mcc|mnc|fontScale|navigation|uiMode"
+            android:exported="false"
+            android:taskAffinity="flutter.uni.app1"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:permission="com.miui.securitycenter.permission.AppPermissionsEditor"
+            android:process=":unimp1"
+            android:theme="@style/DCloudTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="io.dcloud.feature.sdk.multi.DCUniMPTopActivity2"
+            android:configChanges="orientation|keyboard|keyboardHidden|smallestScreenSize|screenLayout|screenSize|mcc|mnc|fontScale|navigation|uiMode"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:permission="com.miui.securitycenter.permission.AppPermissionsEditor"
+            android:process=":unimp2"
+            android:taskAffinity="flutter.uni.app2"
+            android:theme="@style/DCloudTheme"
+            android:windowSoftInputMode="adjustResize" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
