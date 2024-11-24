@@ -24,7 +24,21 @@ target 'Runner' do
 
   pod 'unimp', :subspecs => [
         'Core',  
+        'Audio',              ##音频
+        'File',
+        'Geolocation',        ##系统定位
+        'Camera&Gallery',     ##相机&相册
+        'Geolocation-Gaode',
+        'Map-Gaode', 
+        # 'Payment-IAP',       ##苹果内购
+      #  'Payment-AliPay',     ##支付宝支付
+      #  'Oauth-Apple',        ##苹果登录
+      #  'Oauth-QQ',           ##QQ登录
+       #  'Payment-Wechat',     ##微信支付-同时使用微信分享或登录,必需使用包含支付的依赖库
+      #  'Oauth-Wechat',       ##微信登录-包含支付
+      #  'Oauth-Wechat-Nopay', ##微信登录-不包含支付
   ]
+  pod 'SSZipArchive'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
