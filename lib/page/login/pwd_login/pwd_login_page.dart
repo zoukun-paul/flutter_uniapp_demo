@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
+import 'package:flutter_uniapp_demo/common/user/login.dart';
 import 'package:flutter_uniapp_demo/page/login/common.dart';
 import 'package:flutter_uniapp_demo/page/login/pwd_login/pwd_login_controller.dart';
 import 'package:flutter_uniapp_demo/page/login/pwd_login/pwd_login_style.dart';
@@ -28,7 +29,9 @@ class PwdLoginPage extends GetStyleView<PwdLoginStyle,PwdLoginController> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        header(),
+                        header(actionText: "免密登录", actionTextOnTap: (){
+                          toQuickLoginPage();
+                        }),
                         style.formBody(),
                       ],
                     ),

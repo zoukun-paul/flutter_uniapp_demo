@@ -1,12 +1,17 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_uniapp_demo/common/const.dart';
+import 'package:flutter_uniapp_demo/common/store/user_store.dart';
 import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget{
+import 'page/subject/subject_controller.dart';
+import 'page/subject/subject_style.dart';
 
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget{
+  final bool checkUserLogin;
+  HomeScreen({super.key, required this.checkUserLogin});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -36,17 +41,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             color: Colors.white,
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 24),],
           ),
-          child: SafeArea(child: Obx(()=>tabBar),),
+          child: SafeArea(child: Obx(()=>bottomTabBar),),
         )
     );
   }
 
-  Widget get tabBar => TabBar(
+  Widget get bottomTabBar => TabBar(
     enableFeedback: true,
     indicatorColor: Colors.transparent,
     controller: tabController,
-    labelStyle: const TextStyle(height: 0.5, fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xff32b7b3)),
-    unselectedLabelStyle: const TextStyle(height: 0.5,fontSize: 10, fontWeight: FontWeight.bold,),
+    labelStyle: const TextStyle(height: 0.5, fontSize: Const.bottomTabFontSize, fontWeight: FontWeight.bold, color: Color(0xff32b7b3)),
+    unselectedLabelStyle: const TextStyle(height: 0.5,fontSize: Const.bottomTabFontSize, fontWeight: FontWeight.bold,),
     tabs: tabs,
     onTap: (index)=>currentIndex=index,
   );
@@ -57,4 +62,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     tabController.dispose();
   }
 
+  @override
+  void initState()  {
+    super.initState();
+    if(widget.checkUserLogin && UserStore.token==null){
+      Routers.toPhoneLoginPage();
+    }
+  }
+}
+
+/// init bindings
+class SubjectBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SubjectController>(() => SubjectController());
+    Get.lazyPut<SubjectStyle>(() => SubjectStyle());
+  }
 }

@@ -7,7 +7,8 @@ import 'package:flutter_uniapp_demo/common/widget/divide.dart';
 class MorePage extends StatelessWidget {
    MorePage({super.key});
 
-  String uniAppDownloadUrl = "https://native-res.dcloud.net.cn/unimp-sdk/__UNI__7AEA00D.wgt";
+  // String uniAppDownloadUrl = "https://native-res.dcloud.net.cn/unimp-sdk/__UNI__7AEA00D.wgt";
+  String uniAppDownloadUrl = "http://58.87.88.132:5000/package/__UNI__B278F03.wgt";
 
   String password = "789456123";
 

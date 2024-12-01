@@ -2,12 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_uniapp_demo/common/store/user_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'common/theme.dart';
-import 'page/subject/subject_controller.dart';
-import 'page/subject/subject_style.dart';
 import 'router/router.dart';
 
 class Application extends StatelessWidget {
@@ -23,9 +22,7 @@ class Application extends StatelessWidget {
       ));
     }
     return GetMaterialApp(
-      initialBinding: ScreenBinding(),
-      // initialRoute: Routers.home,
-      initialRoute: Routers.loginByPhone,
+      initialRoute: UserStore.hasLogin?Routers.home:Routers.loginByPhone,
       getPages: Routers.pages,
       builder: FToastBuilder(),
       title: '章鱼同学',
@@ -34,17 +31,3 @@ class Application extends StatelessWidget {
     );
   }
 }
-
-/// init bindings
-class ScreenBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<SubjectController>(() => SubjectController());
-    Get.lazyPut<SubjectStyle>(() => SubjectStyle());
-  }
-
-}
-
-
-
-

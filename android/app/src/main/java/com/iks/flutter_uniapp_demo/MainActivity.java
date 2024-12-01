@@ -1,6 +1,7 @@
 package com.iks.flutter_uniapp_demo;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -45,6 +46,7 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate FlutterActivity");
         super.onCreate(savedInstanceState);
         if (getFlutterEngine() != null) {
             getFlutterEngine().getPlugins().add(new QuickLoginFlutterPlugin());
@@ -203,4 +205,39 @@ public class MainActivity extends FlutterActivity {
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume: ");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop: ");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onNewIntent(@NonNull Intent intent) {
+        Log.d(TAG, "onNewIntent: -----------------");
+        super.onNewIntent(intent);
+    }
 }

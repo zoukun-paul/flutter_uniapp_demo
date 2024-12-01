@@ -16,5 +16,24 @@ List<CourseSchedule> get standardCourseSchedule  {
     CourseSchedule(startTime: date.time(hour: 13,minute: 20), endDateTime: date.time(hour: 14, minute: 5)),
     CourseSchedule(startTime: date.time(hour: 14,minute: 30), endDateTime: date.time(hour: 15, minute: 15)),
     CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+    CourseSchedule(startTime: date.time(hour: 15,minute: 20), endDateTime: date.time(hour: 16, minute: 5)),
+
   ];
 }

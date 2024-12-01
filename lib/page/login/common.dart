@@ -10,6 +10,7 @@ import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
 import 'package:flutter_uniapp_demo/common/theme.dart';
 import 'package:flutter_uniapp_demo/common/widget/checkbox.dart';
+import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:get/get.dart';
 import 'package:remixicon/remixicon.dart';
 
@@ -141,7 +142,7 @@ Widget otherLogin() {
             Remix.wechat_fill,
             color: Color(0xff32c774),
           ),
-        ),
+        ).onTap(()=>Routers.toPhoneLoginBindingPage()),
         Container(
           padding: const EdgeInsets.all(6),
           clipBehavior: Clip.antiAlias,
@@ -153,17 +154,18 @@ Widget otherLogin() {
             Remix.apple_fill,
             color: Color(0xff000000),
           ),
-        )
+        ).onTap(()=>Routers.toPhoneLoginBindingPage())
       ].span(size: 80),
     )
   ].span(size: 20, vertical: true),);
 }
 
 /// 登录页面同统一头部组件
-Widget header({String? actionText, String title="Hi, 同学你好!", void Function()? actionTextOnTap}){
+Widget header({automaticallyImplyLeading=true,String? actionText, String title="Hi, 同学你好!", void Function()? actionTextOnTap}){
   return Column(
     children: [
       AppBar(
+        automaticallyImplyLeading:automaticallyImplyLeading,
         actions: [
           GestureDetector(
             onTap: actionTextOnTap,
@@ -171,6 +173,7 @@ Widget header({String? actionText, String title="Hi, 同学你好!", void Functi
           )
         ],
       ),
+      const SizedBox(height: 41,),
       Container(
         padding: const EdgeInsets.only(left: 24, right: 16, bottom: 40),
         child: Row(
@@ -178,7 +181,7 @@ Widget header({String? actionText, String title="Hi, 同学你好!", void Functi
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 26,fontWeight: FontWeight.bold, color: Color(0xff222222))),
+              style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold, color: Color(0xff222222))),
           ],
         ),
       ),
@@ -208,10 +211,10 @@ Widget contract({required bool selected, void Function(bool)? onTap, double span
 
 /// 其他操作
 Widget optionAction(){
-  return const Row(
+  return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
-      Text("随便逛逛", style: TextStyle(color: Color(0xff58c6c6), fontSize: 16),),
+      Text("随便逛逛", style: TextStyle(color: Color(0xff58c6c6), fontSize: 16),).onTap(()=>Routers.toHomePage(checkUserLogin: false)),
       Text("|", style: TextStyle(color: Color(0xff58c6c6))),
       Text("找回密码", style: TextStyle(color: Color(0xff58c6c6), fontSize: 16))
     ],

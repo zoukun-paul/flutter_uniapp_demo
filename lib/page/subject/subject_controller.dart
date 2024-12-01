@@ -18,9 +18,19 @@ class SubjectController extends GetxController {
   final _weekDays = ( DateTime.now().currWeekDays()).obs;
   List<DateTime> get weekDays =>  _weekDays;
 
-
   /// 时间表
   List<CourseSchedule> subScheduleTimes = standardCourseSchedule;
+
+  /// 课程 （周一到周天： size=7）
+  List<List<Course>> curs = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ];
 
 }
 
@@ -60,6 +70,13 @@ class Course {
   final DateTime endDate;
 
   Course(this.startTime, this.endTime, this.startDate, this.endDate, {required this.name, required this.location, required this.teacher});
+
+  Course.of(this.name, this.location, this.teacher):
+  startTime=DateTime.now(),
+  endTime=DateTime.now(),
+  startDate=DateTime.now(),
+  endDate=DateTime.now()
+  ;
 
 }
 

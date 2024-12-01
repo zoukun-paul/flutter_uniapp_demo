@@ -5,7 +5,6 @@ import 'package:flutter_uniapp_demo/common/extension/list.dart';
 import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
 import 'package:flutter_uniapp_demo/page/login/common.dart';
-import 'package:get/get.dart';
 
 import 'phone_login_controller.dart';
 
