@@ -6,8 +6,23 @@ const String _tokenKey = "token";
 
 class HttpApi {
 
-  final _dio = Dio(BaseOptions(
-    baseUrl: "http://127.0.0.1:8080/",
+  static Dio get dio => _dio;
+
+  // static String baseUrl = "http://58.87.88.132:5000/";
+  static String baseUrl = "http://192.168.0.107:9090/api/v1/buckets/uniapp/objects";
+
+  static String path(String uri){
+    if(uri.startsWith("/")){
+      uri = uri.replaceFirst("/", "");
+    }
+    if(baseUrl.startsWith("/")){
+      return "$baseUrl$uri";
+    }
+    return "$baseUrl/$uri";
+  }
+
+  static final _dio = Dio(BaseOptions(
+    baseUrl: baseUrl,
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
     // 响应content-type 为 [Headers.jsonContentType] 时自动解析为JSON对象
@@ -17,7 +32,7 @@ class HttpApi {
   ))..interceptors.add(HttpHeaderInterceptor());
 
   /// get request
-  Future<Response> get(String path, {
+  static Future<Response> get(String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -34,7 +49,7 @@ class HttpApi {
   }
 
   /// get request
-  Future<Response> post(String path, {
+  static Future<Response> post(String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Options? options,

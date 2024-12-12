@@ -75,5 +75,6 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.8.0'
 
     implementation 'io.github.yidun:quicklogin:3.4.3.1'
+    implementation 'cn.hutool:hutool-core:5.8.33'
 
 }
