@@ -13,6 +13,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:extractNativeLibs="true"
         android:label="flutter_uniapp_demo"
@@ -42,6 +50,20 @@
             </intent-filter>
 
         </activity>
+
+        <!-- 百度定位服务 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="OI5SmiCxzWkcpFuGdAooNc1cVJxALvJB" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <service
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location"
+            android:name=".GeolocatorLocationService"/>
 
        <activity android:name=".AndroidActivity" android:exported="true" />
         <activity

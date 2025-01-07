@@ -1,15 +1,48 @@
 
 
-import 'package:geolocator/geolocator.dart';
+import 'dart:async';
 
+import 'package:geolocator/geolocator.dart';
 /// Determine the current position of the device.
 ///
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
 Future<Position> determinePosition() async {
+  await checkPermission();
+  var setting = AndroidSettings(
+    accuracy: LocationAccuracy.bestForNavigation,
+    forceLocationManager: true,
+    timeLimit: const Duration(seconds: 3)
+  );
+  return await Geolocator.getCurrentPosition(
+    locationSettings: setting,
+  );
+}
+
+Future<Stream<Position>> determinePositionStream() async {
+  await checkPermission();
+  var locationServiceEnabled =await Geolocator.isLocationServiceEnabled();
+  var locationAccuracy =await Geolocator.getLocationAccuracy();
+  var setting = AndroidSettings(
+      accuracy: LocationAccuracy.bestForNavigation,
+      forceLocationManager: true,
+      distanceFilter: 0,
+      intervalDuration: const Duration(seconds: 1),
+      timeLimit: const Duration(seconds: 6),
+      foregroundNotificationConfig:const ForegroundNotificationConfig(
+        notificationTitle: 'locatin',
+        notificationText: '1231',
+        enableWakeLock: true,
+      )
+  );
+  return Geolocator.getPositionStream(
+      locationSettings: setting,
+  );
+}
+
+Future checkPermission() async{
   bool serviceEnabled;
   LocationPermission permission;
-
   // Test if location services are enabled.
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
@@ -39,7 +72,5 @@ Future<Position> determinePosition() async {
   }
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-  return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.medium
-  );
+  return Future.value();
 }
