@@ -27,7 +27,7 @@ jobs:
           distribution: 'zulu'
           java-version: 17
       - name: "Set up Flutter '3.24.3'"
-      - uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.24.3'
       - name: "download flutter dependencies"
