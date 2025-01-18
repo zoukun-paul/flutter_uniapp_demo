@@ -35,7 +35,7 @@ jobs:
       - name: "flutter apk build"
         run: flutter build apk --release --target-platform=android-arm64 --no-shrink
       - name: "check result"
-        run: ll
+        run: ls
   apk:
     name: Generate APK
     if: startsWith(github.ref, 'refs/tags/')
