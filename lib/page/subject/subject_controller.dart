@@ -1,9 +1,13 @@
 
 import 'package:flutter_uniapp_demo/common/extension/DateTime.dart';
+import 'package:flutter_uniapp_demo/common/model/week.dart';
+import 'package:flutter_uniapp_demo/page/subject/service/http.dart';
 import 'package:get/get.dart';
 
-import 'common.dart';
-
+import 'model/Target_schedule.dart';
+import 'model/course.dart';
+import 'model/course_schedule.dart';
+import 'package:collection/collection.dart';
 class SubjectController extends GetxController {
 
   final Rx<int> _currWeek = (DateTime.now().weekday).obs;
@@ -19,64 +23,46 @@ class SubjectController extends GetxController {
   List<DateTime> get weekDays =>  _weekDays;
 
   /// 时间表
-  List<CourseSchedule> subScheduleTimes = standardCourseSchedule;
+  final Rx<List<CourseSchedule>> _subScheduleTimes =Rx<List<CourseSchedule>>([]);
+  List<CourseSchedule> get subScheduleTimes => _subScheduleTimes.value;
+  set subScheduleTimes(List<CourseSchedule> val) => _subScheduleTimes.value = val;
 
   /// 课程 （周一到周天： size=7）
-  List<List<Course>> curs = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ];
+  final Rx<Map<Weekday, List<Course>>> _curs = Rx<Map<Weekday, List<Course>>>({});
+  List<ScheduleCell> curs(Weekday week, {bool padding=true}) {
+    List<ScheduleCell> data = !_curs.value.containsKey(week)
+        ? []
+        : _curs.value[week]!.sorted((Course c1, Course c2)=>c1.startIndex-c2.startIndex);
+    if(padding){
+      // padding
+      List<ScheduleCell> rt = [];
+      var nextIndex = 1;
+      for(var i=0;i<data.length;){
+        var it = data[i];
+        if(it.startIndex==nextIndex) {
+          rt.add(it);
+          i++;
+        }else{
+          // add paddingCell
+          rt.add(PaddingCell(week: week, startIndex: nextIndex, endIndex: nextIndex));
+          nextIndex+=1;
+        }
+      }
+      return rt;
+    }
+    return data;
+  }
+  /// 目标
+  List<TargetSchedule> targetSchedule = [];
+
+  @override
+  void onReady() {
+    targetSchedule = SubjectHttpApi.instance.queryTargetSchedule();
+    _curs.value = SubjectHttpApi.instance.queryScheduleCourse().groupListsBy((e)=>e.week);
+    subScheduleTimes = SubjectHttpApi.instance.queryCourseSchedule();
+  }
+
 
 }
 
-class CourseSchedule {
-
-  final DateTime startTime;
-
-  final DateTime endDateTime;
-
-  // 0 表示课程时间
-  final int type;
-
-  CourseSchedule({required this.startTime, required this.endDateTime,this.type=0});
-}
-
-class Course {
-
-  /// 课程名称
-  final String name;
-
-  /// 上课位置
-  final String location;
-
-  /// 老师
-  final String teacher;
-
-  /// 开始时间
-  final DateTime startTime;
-
-  /// 结束时间
-  final DateTime endTime;
-
-  /// 课程开始日期
-  final DateTime startDate;
-
-  /// 课程结束日期
-  final DateTime endDate;
-
-  Course(this.startTime, this.endTime, this.startDate, this.endDate, {required this.name, required this.location, required this.teacher});
-
-  Course.of(this.name, this.location, this.teacher):
-  startTime=DateTime.now(),
-  endTime=DateTime.now(),
-  startDate=DateTime.now(),
-  endDate=DateTime.now()
-  ;
-
-}
 

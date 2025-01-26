@@ -46,4 +46,13 @@ extension ListGenExtend<T> on List<T> {
       insert(index, t);
       return this;
     }
+
+    List<E> mapIndex<E>(E Function(T ele, int index) to){
+       return asMap().entries.map((entry){
+        T value = entry.value;
+        var index = entry.key;
+        return to.call(value, index);
+      }).toList();
+    }
+
 }

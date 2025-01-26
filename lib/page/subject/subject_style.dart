@@ -2,23 +2,29 @@
 
 import 'package:chinese_number/chinese_number.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_uniapp_demo/common/const.dart';
+import 'package:flutter_uniapp_demo/common/extension/color.dart';
 import 'package:flutter_uniapp_demo/common/extension/list.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
+import 'package:flutter_uniapp_demo/common/model/week.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_controller.dart';
 import 'package:intl/intl.dart';
 
+import 'model/course.dart';
+import 'model/course_schedule.dart';
+
 class SubjectStyle extends Style<SubjectController> {
-  final colWidth = 42.0;
+
+  /// 课程表 星期栏 高度
   final weekCellHeight = 56.0;
-  final pageHeaderHeight = 230.0;
   final _weekHeaderHeight = 36.0;
   final _noticeBoxHeaderHeight = 67.0;
 
-  double bodyHeight(BuildContext ctx){
-    return MediaQuery.of(ctx).size.height-Const.bottomBarHeight-Const.statusBarHeight-_weekHeaderHeight-_noticeBoxHeaderHeight;
-  }
+  /// 课程表 课程单元格最大高度
+  final double cellHeight = 67;
+  final double cellWith = 45;
 
   Widget header(){
     return Padding(
@@ -100,7 +106,7 @@ class SubjectStyle extends Style<SubjectController> {
     const Color activeColor = Color(0xff32b7b3);
     return SizedBox(
       height: weekCellHeight,
-      width: colWidth,
+      width: cellWith,
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -129,21 +135,6 @@ class SubjectStyle extends Style<SubjectController> {
     );
   }
 
-  Widget scheduleCell(int index ,CourseSchedule courseSchedule){
-    return SizedBox(
-      width: colWidth,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("$index"),
-          Text(DateFormat("HH:mm").format(courseSchedule.startTime)),
-          Text(DateFormat("HH:mm").format(courseSchedule.endDateTime)),
-        ],
-      ),
-    );
-  }
-
   List<Widget> scheduleHeaderRow() {
     return controller
         .weekDays
@@ -151,6 +142,54 @@ class SubjectStyle extends Style<SubjectController> {
         .toList()
         .ins(0, headerCell(controller.weekDays.first, monthModel: true))
         .toList();
-   }
+  }
+
+  Widget scheduleCell(int index ,CourseSchedule courseSchedule){
+    return SizedBox(
+      height: cellHeight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("$index", style: const TextStyle(fontSize: 14)),
+          Text(courseSchedule.startTime.format(DateFormat("HH:mm")), style: const TextStyle(fontSize: 12),),
+          Text(courseSchedule.endDateTime.format(DateFormat("HH:mm")), style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+
+  Widget courseCell(ScheduleCell course){
+    Widget child = SizedBox(
+      height: cellHeight,
+    );
+    if(course is Course){
+      var color = roundColor();
+      child = Container(
+        width: cellWith,
+        height: cellHeight * course.count,
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+            color: color,
+            border: Border.all(color: color.withOpacity(0.6), width: 0.6),
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
+          ),
+          child: Center(
+            child: Text(
+              "${course.name}@${course.location}",
+              style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w500),
+            ),
+          )
+        ),
+      );
+    }
+    return child;
+  }
+
+  List<Widget> courseCells(List<ScheduleCell> courses){
+    return courses.map((e)=>courseCell(e)).toList();
+  }
 
 }
