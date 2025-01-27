@@ -7,6 +7,7 @@ import 'package:flutter_uniapp_demo/common/widget/divide.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_controller.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_style.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SubjectPage extends GetStyleView<SubjectStyle, SubjectController> {
 
@@ -14,7 +15,7 @@ class SubjectPage extends GetStyleView<SubjectStyle, SubjectController> {
   Widget proxyBuild(BuildContext context) {
     return Column(
       children: [
-        style.header(),
+        style.header(context),
         divider(size: 1, bgColor: const Color(0xffE5E5E5), horizontal: true),
         Expanded(
           child: Stack(
@@ -35,37 +36,36 @@ class SubjectPage extends GetStyleView<SubjectStyle, SubjectController> {
                   left: 0,
                   right: 0,
                   child: SingleChildScrollView(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        /// 时间列
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ...controller.subScheduleTimes.mapIndex((e,i)=>style.scheduleCell(i+1, e))
-                          ],
-                        ),
-                        /// 课程表主体
-                        Obx(
-                          ()=>Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(children: [...style.courseCells(controller.curs(Weekday.monday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.tuesday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.wednesday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.thursday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.friday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.saturday))],),
-                              Column(children: [...style.courseCells(controller.curs(Weekday.sunday))],),
-                            ],
+                    child: Obx(
+                      ()=>Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: controller.subScheduleTimes.mapIndex((e,i)=>style.scheduleCell(i+1, e)),
                           ),
-                        )
-                      ],
+                          /// 课程表主体
+                          Obx(
+                            ()=>Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(children: [...style.courseCells(controller.curs(Weekday.monday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.tuesday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.wednesday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.thursday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.friday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.saturday))],),
+                                Column(children: [...style.courseCells(controller.curs(Weekday.sunday))],),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   )
-              )
+              ),
             ],
           ),
         )

@@ -1,5 +1,7 @@
 
 
+import 'dart:ffi';
+
 import 'package:chinese_number/chinese_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -7,10 +9,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_uniapp_demo/common/const.dart';
 import 'package:flutter_uniapp_demo/common/extension/color.dart';
 import 'package:flutter_uniapp_demo/common/extension/list.dart';
+import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
-import 'package:flutter_uniapp_demo/common/model/week.dart';
+import 'package:flutter_uniapp_demo/common/key_value_pair.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'model/course.dart';
 import 'model/course_schedule.dart';
@@ -26,65 +30,77 @@ class SubjectStyle extends Style<SubjectController> {
   final double cellHeight = 67;
   final double cellWith = 45;
 
-  Widget header(){
+  /// 学期信息
+  Widget semester(){
+    return SizedBox(
+      height: _weekHeaderHeight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text("第${controller.currWeek.toSimplifiedChineseNumber()}周", style: const TextStyle(fontSize: 15),),
+              const Icon(Icons.keyboard_arrow_right_outlined),
+              const SizedBox(width: 6,),
+              Text(controller.semester, style: const TextStyle(color: Color(0xff999999), fontSize: 14),)
+            ],
+          ),
+          SvgPicture.asset("assets/subject/xysub.svg",colorFilter: const ColorFilter.mode(Color(0xffff619b), BlendMode.srcIn))
+        ],
+      ),
+    );
+  }
+
+  /// 学期目标
+  Widget target(BuildContext ctx){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("全国大学生英语四六级考试", style: TextStyle(fontSize: 14),),
+                const SizedBox(height: 5,),
+                [const Text(
+                  "2024年12月31日",
+                  style: TextStyle(color: Color(0xff777777), fontSize: 12),
+                ), label("还有71天",)].span(size: 6).row(),
+              ],
+            )
+          ],
+        ),
+        Row(
+          children: [
+            ...[
+              /// 周
+              SvgPicture.asset("assets/subject/week.svg",).onTap((){
+                controller.showWeekSelectorSheet(ctx, controller.currWeek);
+              }),
+              SvgPicture.asset("assets/subject/filter.svg"),
+              SvgPicture.asset("assets/subject/add.svg"),
+            ].span(size: 16)
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget header(BuildContext context){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
           const SizedBox(height: Const.statusBarHeight,),
-          SizedBox(
-            height: _weekHeaderHeight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("第${controller.currWeek.toSimplifiedChineseNumber()}周", style: const TextStyle(fontSize: 15),),
-                    const Icon(Icons.keyboard_arrow_right_outlined),
-                    const SizedBox(width: 6,),
-                    Text(controller.semester, style: const TextStyle(color: Color(0xff999999), fontSize: 14),)
-                  ],
-                ),
-                SvgPicture.asset("assets/subject/xysub.svg",colorFilter: const ColorFilter.mode(Color(0xffff619b), BlendMode.srcIn))
-              ],
-            ),
-          ),
+          semester(),
           SizedBox(
             height: _noticeBoxHeaderHeight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("全国大学生英语四六级考试", style: TextStyle(fontSize: 14),),
-                        const SizedBox(height: 5,),
-                        [const Text(
-                          "2024年12月31日",
-                          style: TextStyle(color: Color(0xff777777), fontSize: 12),
-                        ),
-                        label("还有71天",)].span(size: 6).row(),
-                      ],
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    ...[
-                      SvgPicture.asset("assets/subject/week.svg",),
-                      SvgPicture.asset("assets/subject/filter.svg"),
-                      SvgPicture.asset("assets/subject/add.svg"),
-                    ].span(size: 16)
-                  ],
-                )
-              ],
-            ),
+            child: target(context),
           )
         ],
       ),
@@ -144,7 +160,7 @@ class SubjectStyle extends Style<SubjectController> {
         .toList();
   }
 
-  Widget scheduleCell(int index ,CourseSchedule courseSchedule){
+  Widget scheduleCell(int index, CourseSchedule courseSchedule){
     return SizedBox(
       height: cellHeight,
       child: Column(
@@ -164,22 +180,22 @@ class SubjectStyle extends Style<SubjectController> {
       height: cellHeight,
     );
     if(course is Course){
-      var color = roundColor();
+      var color = bgColor(course.name);
       child = Container(
         width: cellWith,
         height: cellHeight * course.count,
-        padding: const EdgeInsets.symmetric(horizontal: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
-            color: color,
-            border: Border.all(color: color.withOpacity(0.6), width: 0.6),
+            color: color.withOpacity(0.5),
+            border: Border.all(color: color, width: 0.5),
             borderRadius: const BorderRadius.all(Radius.circular(4)),
           ),
           child: Center(
             child: Text(
               "${course.name}@${course.location}",
-              style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500, color: color),
             ),
           )
         ),
@@ -188,8 +204,42 @@ class SubjectStyle extends Style<SubjectController> {
     return child;
   }
 
-  List<Widget> courseCells(List<ScheduleCell> courses){
-    return courses.map((e)=>courseCell(e)).toList();
+  List<Widget> courseCells(List<ScheduleCell> courses)=>courses.map((e)=>courseCell(e)).toList();
+
+  /// 系统默认的课程表背景颜色
+  List<KeyValuePair<Color, String?>> sysCourseBgColor = [
+    KeyValuePair(key: const Color(0xff32b7b3), value: null),
+    KeyValuePair(key: const Color(0xff1677ff), value: null),
+    KeyValuePair(key: const Color(0xff8648dd), value: null),
+    KeyValuePair(key: const Color(0xffeb2f96), value: null),
+
+    KeyValuePair(key: const Color(0xfff5222d), value: null),
+    KeyValuePair(key: const Color(0xfffa8c16), value: null),
+    KeyValuePair(key: const Color(0xff17c540), value: null),
+    KeyValuePair(key: const Color(0xffffd000), value: null),
+
+    KeyValuePair(key: const Color(0xffff7b00), value: null),
+    KeyValuePair(key: const Color(0xff5953fe), value: null),
+    KeyValuePair(key: const Color(0xff00aeff), value: null),
+    KeyValuePair(key: const Color(0xff71bf0b), value: null),
+  ];
+
+  Color bgColor(String name){
+    if(sysCourseBgColor.where((e)=>e.value==null).isEmpty){
+      // 系统颜色不够
+      return  Colors.cyan;
+    }
+    var index = name.hashCode%sysCourseBgColor.length;
+    while(true){
+      index = index%(sysCourseBgColor.length);
+      var pair =  sysCourseBgColor[index];
+      if(pair.value==null || name == pair.value){
+        pair.value ??= name;
+        print("$name=${pair.key}");
+        return pair.key;
+      }
+      index+=1;
+    }
   }
 
 }

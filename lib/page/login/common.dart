@@ -131,6 +131,7 @@ Widget otherLogin() {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        /// 微信登录
         Container(
           padding: const EdgeInsets.all(6),
           clipBehavior: Clip.antiAlias,

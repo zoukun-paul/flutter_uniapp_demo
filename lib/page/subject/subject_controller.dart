@@ -1,8 +1,10 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter_uniapp_demo/common/extension/DateTime.dart';
 import 'package:flutter_uniapp_demo/common/model/week.dart';
 import 'package:flutter_uniapp_demo/page/subject/service/http.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'model/Target_schedule.dart';
 import 'model/course.dart';
@@ -60,6 +62,57 @@ class SubjectController extends GetxController {
     targetSchedule = SubjectHttpApi.instance.queryTargetSchedule();
     _curs.value = SubjectHttpApi.instance.queryScheduleCourse().groupListsBy((e)=>e.week);
     subScheduleTimes = SubjectHttpApi.instance.queryCourseSchedule();
+  }
+
+  /// 底部周选择抽屉
+  showWeekSelectorSheet(BuildContext context, int currWeek){
+    bool isCurrWeek(int week)=>week==currWeek;
+    showMaterialModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(6),
+          ),
+        ),
+        builder: (context){
+          return SizedBox(
+            height: 420,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      Text("查看周课表", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500,color: Color(0xff222222)),),
+                      Text("修改当前周", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,color: Color(0xff32B7B3)),),
+                    ],
+                  ),
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 5,
+                      shrinkWrap: true,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      children: List.generate(25, (i){
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: !isCurrWeek(i+1)?const Color(0xfff1f1f1):const Color(0xff32b7b3),
+                            borderRadius: const BorderRadius.all(Radius.circular(4))
+                          ),
+                          alignment: Alignment.center,
+                          child: !isCurrWeek(i+1)?Text("${i+1}"):const Text("本周",style: TextStyle(color: Colors.white),),
+                        );
+                      }),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+    );
   }
 
 

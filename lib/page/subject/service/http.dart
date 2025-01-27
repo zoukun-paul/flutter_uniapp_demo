@@ -64,8 +64,13 @@ class SubjectHttpApiMockImpl extends SubjectHttpApi{
   @override
   List<Course> queryScheduleCourse({Date? date}) {
     return [
-      Course(week: Weekday.sunday, startIndex: 3, endIndex: 4, name: '线性代数', location: "C2", teacher: "kzou"),
-      Course(week: Weekday.friday, startIndex: 1, endIndex: 4, name: '高数', location: "C2", teacher: "kzou")
+      Course(week: Weekday.monday, startIndex: 1, endIndex: 4, name: '线性代数1', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.tuesday, startIndex: 5, endIndex: 6, name: '线性代数2', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.wednesday, startIndex: 3, endIndex: 4, name: '线性代数3', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.thursday, startIndex: 3, endIndex: 4, name: '线性代数4', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.friday, startIndex: 6, endIndex: 7, name: '线性代数5', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.saturday, startIndex: 3, endIndex: 4, name: '线性代数6', location: "C2", teacher: "kzou"),
+      Course(week: Weekday.sunday, startIndex: 4, endIndex: 5, name: '高数7', location: "C2", teacher: "kzou")
     ];
   }
 
