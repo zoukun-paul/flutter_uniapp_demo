@@ -60,6 +60,7 @@ dependencies:
   collection: ^1.18.0
   modal_bottom_sheet: ^3.0.0
   fluwx: ^5.4.1
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:

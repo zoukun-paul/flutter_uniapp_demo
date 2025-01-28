@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uniapp_demo/common/extension/DateTime.dart';
 import 'package:flutter_uniapp_demo/common/model/week.dart';
+import 'package:flutter_uniapp_demo/page/subject/model/target_schedule.dart';
 import 'package:flutter_uniapp_demo/page/subject/service/http.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import 'model/Target_schedule.dart';
 import 'model/course.dart';
 import 'model/course_schedule.dart';
 import 'package:collection/collection.dart';

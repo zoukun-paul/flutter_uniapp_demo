@@ -2,8 +2,8 @@
 import 'package:flutter_uniapp_demo/common/model/Date.dart';
 import 'package:flutter_uniapp_demo/common/model/time.dart';
 import 'package:flutter_uniapp_demo/common/model/week.dart';
-import 'package:flutter_uniapp_demo/page/subject/model/Target_schedule.dart';
 import 'package:flutter_uniapp_demo/page/subject/model/course_schedule.dart';
+import 'package:flutter_uniapp_demo/page/subject/model/target_schedule.dart';
 
 import '../model/course.dart';
 
@@ -50,10 +50,18 @@ class SubjectHttpApiMockImpl extends SubjectHttpApi{
   List<TargetSchedule> queryTargetSchedule({String? userId}) {
     return [
       TargetSchedule(
+        planType: TargetSchedulePlanType.custom,
         deadline: DateTime.now().add(const Duration(days: 21)),
         title: "全国大学生英语四六级考试",
       ),
       TargetSchedule(
+          planType: TargetSchedulePlanType.everyDay,
+          deadline: DateTime.now().add(const Duration(days: 30)),
+          title: "每天吃一个苹果",
+          location: "T1体育管"
+      ),
+      TargetSchedule(
+          planType: TargetSchedulePlanType.custom,
           deadline: DateTime.now().add(const Duration(days: 37)),
           title: "高数考试",
           location: "T1体育管"

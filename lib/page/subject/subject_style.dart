@@ -17,6 +17,7 @@ import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'goal_page/goal_page.dart';
 import 'lovers_course_page/lovers_course_page.dart';
 import 'model/course.dart';
 import 'model/course_schedule.dart';
@@ -78,7 +79,7 @@ class SubjectStyle extends Style<SubjectController> {
                   style: TextStyle(color: Color(0xff777777), fontSize: 12),
                 ), label("还有71天",)].span(size: 6).row(),
               ],
-            )
+            ).onTap(()=>Routers.toPage(GoalPage()))
           ],
         ),
         Row(
