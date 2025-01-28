@@ -17,9 +17,9 @@ extension WidgetExtension on Widget{
       );
     }
 
-    Widget onTap(void Function() func){
+    Widget onTap(void Function() func, {bool condition=true}){
       return GestureDetector(
-        onTap: func,
+        onTap: condition?func:null,
         child: this,
       );
     }

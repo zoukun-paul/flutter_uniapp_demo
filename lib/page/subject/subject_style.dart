@@ -13,9 +13,11 @@ import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/common/get/get_style_view.dart';
 import 'package:flutter_uniapp_demo/common/key_value_pair.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_controller.dart';
+import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'lovers_course_page/lovers_course_page.dart';
 import 'model/course.dart';
 import 'model/course_schedule.dart';
 
@@ -47,7 +49,11 @@ class SubjectStyle extends Style<SubjectController> {
               Text(controller.semester, style: const TextStyle(color: Color(0xff999999), fontSize: 14),)
             ],
           ),
-          SvgPicture.asset("assets/subject/xysub.svg",colorFilter: const ColorFilter.mode(Color(0xffff619b), BlendMode.srcIn))
+          SvgPicture
+              .asset("assets/subject/xysub.svg",colorFilter: const ColorFilter.mode(Color(0xffff619b), BlendMode.srcIn))
+              .onTap((){
+            Routers.toPage(LoversCoursePage());
+          })
         ],
       ),
     );

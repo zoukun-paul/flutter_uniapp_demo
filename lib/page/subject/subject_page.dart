@@ -7,7 +7,6 @@ import 'package:flutter_uniapp_demo/common/widget/divide.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_controller.dart';
 import 'package:flutter_uniapp_demo/page/subject/subject_style.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SubjectPage extends GetStyleView<SubjectStyle, SubjectController> {
 
