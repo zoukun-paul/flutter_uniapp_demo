@@ -1,12 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_uniapp_demo/application.dart';
 import 'package:flutter_uniapp_demo/common/extension/list.dart';
+import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/page/subject/model/target_schedule.dart';
 import 'package:flutter_uniapp_demo/page/subject/service/http.dart';
 import 'package:flutter_uniapp_demo/page/subject/widget/target_box.dart';
+import 'package:flutter_uniapp_demo/router/router.dart';
 import 'package:get/get.dart';
+
+import 'goal_create_page.dart';
 
 class GoalPage extends StatefulWidget {
   const GoalPage({super.key});
@@ -25,6 +28,31 @@ class _GoalPageState extends State<GoalPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     goals.value = SubjectHttpApi.instance.queryTargetSchedule();
+  }
+
+  Widget createGoalBtn(){
+    return GestureDetector(
+      onTap: ()=>Routers.toPage(GoalCreatePage()),
+      child: DottedBorder(
+        color: const Color(0xff32B7B3),
+        strokeWidth: 1,
+        borderType: BorderType.RRect,
+        radius: const Radius.circular(8),
+        child: Container(
+          height: 44,
+          color: Colors.transparent,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset("assets/subject/add_circle.svg"),
+              const SizedBox(width: 6,),
+              const Text("创建计划", style: TextStyle(color: Color(0xff32B7B3)),)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -66,24 +94,7 @@ class _GoalPageState extends State<GoalPage> with TickerProviderStateMixin {
                       Column(
                         children: [
                           const SizedBox(height: 16,),
-                          DottedBorder(
-                            color: const Color(0xff32B7B3),
-                            strokeWidth: 1,
-                            borderType: BorderType.RRect,
-                            radius: const Radius.circular(8),
-                            child: Container(
-                              height: 44,
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset("assets/subject/add_circle.svg"),
-                                  const SizedBox(width: 6,),
-                                  const Text("创建计划", style: TextStyle(color: Color(0xff32B7B3)),)
-                                ],
-                              ),
-                            ),
-                          ),
+                          createGoalBtn(),
                           const SizedBox(height: 16,),
                           ...goals
                               .value
