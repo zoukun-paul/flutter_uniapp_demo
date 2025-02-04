@@ -2,7 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_uniapp_demo/common/extension/list.dart';
-import 'package:flutter_uniapp_demo/common/extension/widget.dart';
 import 'package:flutter_uniapp_demo/page/subject/model/target_schedule.dart';
 import 'package:flutter_uniapp_demo/page/subject/service/http.dart';
 import 'package:flutter_uniapp_demo/page/subject/widget/target_box.dart';
@@ -89,6 +88,7 @@ class _GoalPageState extends State<GoalPage> with TickerProviderStateMixin {
               ],),
             Expanded(
                 child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: tabController,
                     children: [
                       Column(
@@ -102,7 +102,15 @@ class _GoalPageState extends State<GoalPage> with TickerProviderStateMixin {
                               .span(size: 16, vertical: true),
                         ],
                       ),
-                      Container(color: Colors.cyan),
+                      Column(
+                        children: [
+                          const SizedBox(height: 16,),
+                          ...goals
+                              .value
+                              .map((e)=>targetBox(e)).toList()
+                              .span(size: 16, vertical: true),
+                        ],
+                      ),
                     ]
                 )
             )

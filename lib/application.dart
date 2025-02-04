@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'common/theme.dart';
 import 'plug/channel/uni_app_event_channel.dart';
 import 'router/router.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 class Application extends StatelessWidget {
   const Application({super.key});
 
@@ -24,6 +24,12 @@ class Application extends StatelessWidget {
     }
     UniAppEventChannel().init();
     return GetMaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('zh', 'CH'),],
       initialRoute: UserStore.hasLogin?Routers.home:Routers.loginByPhone,
       getPages: Routers.pages,
       builder: FToastBuilder(),
