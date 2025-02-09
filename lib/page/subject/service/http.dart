@@ -1,5 +1,5 @@
 
-import 'package:flutter_uniapp_demo/common/model/Date.dart';
+import 'package:flutter_uniapp_demo/common/model/date.dart';
 import 'package:flutter_uniapp_demo/common/model/time.dart';
 import 'package:flutter_uniapp_demo/common/model/week.dart';
 import 'package:flutter_uniapp_demo/page/subject/model/course_schedule.dart';
